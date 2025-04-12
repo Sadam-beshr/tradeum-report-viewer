@@ -1,5 +1,5 @@
 
-import { toast } from "@/components/ui/sonner";
+import { toast } from "@/hooks/use-toast";
 
 export interface TradeData {
   symbol: string;
@@ -40,7 +40,11 @@ export const fetchTradeData = async (startDate: string, endDate: string): Promis
     return data.data;
   } catch (error) {
     console.error('Error fetching trade data:', error);
-    toast.error('Failed to load trading data');
+    toast({
+      title: "Error",
+      description: "Failed to load trading data",
+      variant: "destructive"
+    });
     return [];
   }
 };

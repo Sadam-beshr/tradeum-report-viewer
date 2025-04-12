@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { fetchTradeData, calculateTradeMetrics, TradeData } from "@/services/api";
 import { ArrowDownIcon, ArrowUpIcon, Activity, Clock, RefreshCw, PieChart } from "lucide-react";
@@ -8,7 +7,7 @@ import ProfitLossChart from "./ProfitLossChart";
 import TradesTable from "./TradesTable";
 import PerformanceMetrics from "./PerformanceMetrics";
 import { format } from "date-fns";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 
 const Dashboard = () => {
@@ -32,7 +31,11 @@ const Dashboard = () => {
       setLastUpdated(new Date());
     } catch (error) {
       console.error("Error fetching trade data:", error);
-      toast.error("Failed to load trading data");
+      toast({
+        title: "Error",
+        description: "Failed to load trading data",
+        variant: "destructive"
+      });
     } finally {
       setLoading(false);
     }
@@ -44,7 +47,10 @@ const Dashboard = () => {
 
   const handleRefresh = () => {
     loadTradeData();
-    toast.success("Trade data refreshed");
+    toast({
+      title: "Success",
+      description: "Trade data refreshed",
+    });
   };
 
   const handleRangeChange = (range: { start: Date; end: Date }) => {
